@@ -1,0 +1,98 @@
+{% extends 'tracker/layout.html' %}
+{% block content %}
+<section class="mt-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Place an Order</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Search and select books to submit your order.</p>
+
+                        <!-- Search Form -->
+                        <form method="get" class="mb-3 d-flex">
+                            <input type="text" name="q" class="form-control me-2" placeholder="Search by title or author" value="{{ query }}">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </form>
+                        {% if latest_order %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h4>Your Order Summary</h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Book</th>
+                                            <th>Author</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in latest_order.orderitem_set.all %}
+                                        <tr>
+                                            <td>{{ item.book.title }}</td>
+                                            <td>{{ item.book.authors }}</td>
+                                            <td>{{ item.quantity }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <!-- Order Form -->
+                        <form method="post" action="{% url 'order' %}">
+                            {% csrf_token %}
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Select</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Category</th>
+                                        <th>Available Stock</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for book in books %}
+                                    <tr>
+                                        <td>
+                                            {% if book.stock > 0 %}
+                                                <input type="checkbox" name="book_ids" value="{{ book.id }}">
+                                            {% else %}
+                                                Out of stock
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ book.title }}</td>
+                                        <td>{{ book.authors }}</td>
+                                        <td>{{ book.category.name }}</td>
+                                        <td>{{ book.stock }}</td>
+                                        <td>
+                                            {% if book.stock > 0 %}
+                                                <input type="number" name="quantity_{{ book.id }}" min="1" max="{{ book.stock }}" class="form-control" value="1">
+                                            {% else %}
+                                                <input type="number" class="form-control" disabled placeholder="0">
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="text-center">No books found.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                            <button type="submit" class="btn btn-success mt-3">Submit Order</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

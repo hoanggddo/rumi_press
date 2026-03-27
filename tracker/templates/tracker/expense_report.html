@@ -1,0 +1,62 @@
+{% extends 'tracker/layout.html' %}
+
+{% block content %}
+<section class="container mt-5">
+    <h2>Expense Report</h2>
+
+    <div class="mb-3">
+        <a href="{% url 'add_transaction' %}" class="btn btn-dark">Add Transaction</a>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Total Income</h5>
+                <p>${{ total_income|floatformat:2 }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Total Expense</h5>
+                <p>${{ total_expense|floatformat:2 }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Net Balance</h5>
+                <p>${{ net_balance|floatformat:2 }}</p>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.type }}</td>
+                <td>{{ t.description }}</td>
+                <td>{{ t.amount }}</td>
+                <td>
+                    <a href="{% url 'edit_transaction' pk=t.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'delete_transaction' pk=t.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No transactions found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

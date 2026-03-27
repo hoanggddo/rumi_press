@@ -1,0 +1,179 @@
+{% extends 'tracker/layout.html' %}
+{% block content %}
+<section class="mt-4">
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>Dashboard</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Buttons for Add / View Transactions -->
+                        <div class="d-flex justify-content-between mb-4">
+                            <a href="{% url 'add_transaction' %}" class="btn btn-primary">Add Transaction</a>
+                            <a href="{% url 'expense_report' %}" class="btn btn-secondary">View Transactions</a>
+                        </div>
+
+                        <!-- KPI Cards -->
+                        <div class="row text-center mb-4">
+                            <div class="col-md-4 mb-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Income</h5>
+                                        <p class="card-text">${{ total_income|floatformat:2 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Total Expenses</h5>
+                                        <p class="card-text">${{ total_expense|floatformat:2 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Net Balance</h5>
+                                        <p class="card-text">${{ net_balance|floatformat:2 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="mb-4">
+                            <form method="get" class="row g-3">
+                                <div class="col-md-4">
+                                    <select name="category" class="form-select">
+                                        <option value="">All Categories</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>
+                                                {{ category.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" name="start_date" value="{{ request.GET.start_date }}" class="form-control" placeholder="Start Date">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="date" name="end_date" value="{{ request.GET.end_date }}" class="form-control" placeholder="End Date">
+                                </div>
+                                <div class="col-12 text-end mt-2">
+                                    <button type="submit" class="btn btn-outline-primary">Apply Filters</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Expense by Category Table -->
+                        <div class="card mb-4">
+                            <div class="card-header text-center">Expenses by Category</div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Total Expense ($)</th>
+                                            <th>Number of Books</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for category_data in category_summary %}
+                                        <tr>
+                                            <td>{{ category_data.name }}</td>
+                                            <td>${{ category_data.total_expense|floatformat:2 }}</td>
+                                            <td>{{ category_data.book_count }}</td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="3" class="text-center">No category data available</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Expense Trend Table -->
+                        <div class="card mb-4">
+                            <div class="card-header text-center">Expenses Over Time</div>
+                            <div class="card-body">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Total Expense ($)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for date_data in expense_trends %}
+                                        <tr>
+                                            <td>{{ date_data.date }}</td>
+                                            <td>${{ date_data.total_expense|floatformat:2 }}</td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="2" class="text-center">No expense trend data available</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Book/Transaction Table -->
+                        <div class="card mb-4">
+                            <div class="card-header text-center">Book / Transaction Details</div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Book Title</th>
+                                                <th>Author</th>
+                                                <th>Category</th>
+                                                <th>Expense ($)</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for book in books %}
+                                            <tr>
+                                                <td>{{ book.title }}</td>
+                                                <td>{{ book.author }}</td>
+                                                <td>{{ book.category.name }}</td>
+                                                <td>${{ book.expense|floatformat:2 }}</td>
+                                                <td>{{ book.date }}</td>
+                                            </tr>
+                                            {% empty %}
+                                            <tr><td colspan="5" class="text-center">No records found</td></tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Insights / Summary -->
+                        <div class="card">
+                            <div class="card-header text-center">Insights</div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Total categories: {{ categories|length }}</li>
+                                    <li>Highest expense category: {{ highest_expense_category }}</li>
+                                    <li>Book with highest distribution cost: {{ highest_cost_book.title }}</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,46 @@
+<nav class="navbar bg-dark navbar-expand-lg" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}">Rumi Press</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-light" aria-current="page" href="{% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'category_list' %}">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'book_list' %}">Books</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'cart' %}">Cart</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="{% url 'expense_report' %}">Expenses</a>
+        </li>
+
+      </ul>
+      <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'dashboard' %}">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'account_logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'account_login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="{% url 'account_signup' %}">Register</a>
+          </li>
+        {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

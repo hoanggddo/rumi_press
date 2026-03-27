@@ -1,0 +1,17 @@
+# Python & Django
+__pycache__/
+*.pyc
+*.sqlite3
+*.env
+db.sqlite3
+
+# IDE / OS files
+.DS_Store
+*.log
+
+# Ignore everything outside your project folders
+Downloads/
+*.exe
+*.jpg
+*.mp4
+*.zip
