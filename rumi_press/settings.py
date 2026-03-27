@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7i*))^1a^srj5_%a)=*8+2zie-_i-c1&3mebpzq7tsvsly=_^n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['rumi-press.onrender.com']
 
 
 # Application definition
