@@ -27,7 +27,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['rumi-press-22f5.onrender.com']
 CSRF_TRUSTED_ORIGINS = [
-    'https://rumi-press-22f5.onrender.com/',  # Replace with your actual Render URL
+    'https://rumi-press-22f5.onrender.com',
 ]
 
 SESSION_COOKIE_SECURE = True
@@ -139,6 +139,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
