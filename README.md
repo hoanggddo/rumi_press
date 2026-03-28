@@ -82,7 +82,9 @@ https://rumi-press-22f5.onrender.com
 ## 📁 Technologies Used
 
 - Python  
-- Django  
+- Django
+- BootStrap
+- HTML
 - SQLite (for development)  
 - Git / GitHub  
 
