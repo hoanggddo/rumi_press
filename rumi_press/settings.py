@@ -26,7 +26,12 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['rumi-press-22f5.onrender.com']
+CSRF_TRUSTED_ORIGINS = [
+    'https://rumi-press-22f5.onrender.com/',  # Replace with your actual Render URL
+]
 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
