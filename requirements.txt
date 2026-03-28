@@ -5,3 +5,4 @@ gunicorn==21.2.0       # needed for Render
 psycopg2-binary==2.9.10 # if using PostgreSQL
 python-decouple==3.8    # optional, for env vars
 django-allauth==65.15.0 
+whitenoise>=6.5.0
