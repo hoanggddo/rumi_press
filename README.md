@@ -74,9 +74,8 @@ I developed this system based on a real-world dataset provided as part of the pr
 
 ---
 
-## 📸 Screenshots
-
-> _Add screenshots of the Django Admin, CRUD forms, and report views here._
+## Try it here
+https://rumi-press-22f5.onrender.com
 
 ---
 
