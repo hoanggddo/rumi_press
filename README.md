@@ -1,97 +1,92 @@
 # 📚 Rumi Press Book Distribution Management System
 
-## Overview
+A full-stack Django web application designed to replace spreadsheet-based workflows for managing book distribution operations.
 
-This project was developed as part of a hands-on Coursera experience, where I stepped into the role of an intermediate software developer for **Rumi Press**, a major book distribution house in the EdTech industry. The objective was to help Rumi Press transition from spreadsheets to a fully-functional **Django web application** for managing their book distribution workflow.
+## 🚀 Overview
 
----
+This project simulates a real-world business scenario where a publishing/distribution company transitions from manual spreadsheet tracking to a centralized, web-based system.
 
-## ⏱️ Estimated Time to Complete
-
-**4–6 hours**
+The application enables efficient management of books, categories, and distribution expenses, while providing search functionality and visual insights through reporting dashboards.
 
 ---
 
-## 🧠 Skills Demonstrated
+## ✨ Features
 
-- ✅ Developed data models using Django ORM  
-- ✅ Designed and scaffolded Django apps using Django Admin  
-- ✅ Migrated legacy spreadsheet data into Django models  
-- ✅ Created dynamic visual reports to display distribution expenses by category  
-- ✅ Implemented full CRUD (Create, Read, Update, Delete) functionality  
-- ✅ Practiced version control with Git for branching and committing changes  
-
----
-
-## 🚀 What I Built
-
-I created a full-stack Django web application that allows Rumi Press to:
-
-- 📘 Manage book information including title, author, category, and distribution expenses  
-- 🗂️ Add and manage book categories such as Python, Data Science, Business Analytics, and Math  
-- 📈 View insightful reports displaying expense breakdowns by category  
-- 📤 Migrate existing spreadsheet data into the system seamlessly  
-- 🔒 Improve data availability and security by moving to a centralized, web-based system  
-
-The system includes:
-
-- A user-friendly Django Admin interface  
-- Fully functioning CRUD forms with validation  
-- Clean and readable report views with charts for visual interpretation  
-- Error-handling and user guidance in case of input or system issues  
+- 🔐 User authentication using Django's built-in auth system  
+- 📘 Manage books (title, author, category, expenses)  
+- 🗂️ Create and manage book categories  
+- 🔍 Search functionality for quick data retrieval  
+- 📈 Expense reporting with category-based visualizations  
+- ✏️ Full CRUD operations with validation and error handling  
+- 📤 Migration of legacy spreadsheet data into the system  
+- 🌐 Deployed and accessible online  
 
 ---
 
-## 🧩 Project Scenario
+## 🧩 Tech Stack
 
-At Rumi Press, the book distribution team was previously tracking their operations using spreadsheets. They needed an automated, web-based platform to:
-
-- Centralize and secure their data  
-- Automate business processes  
-- Generate visual insights into expenses and performance  
-
-I developed this system based on a real-world dataset provided as part of the project. The data was used to populate the initial application and inform the design of reporting views and application logic.
+- **Backend:** Python, Django  
+- **Frontend:** HTML, Bootstrap  
+- **Database:** SQLite (development)  
+- **Version Control:** Git / GitHub  
+- **Deployment:** Render  
 
 ---
 
-## 📌 Project Objectives Achieved
+## 📊 Key Functionality
 
-- ✅ **Track book distribution expenses** with accurate and categorized reporting  
-- ✅ **Ensure data security and availability** through Django’s authentication and admin panel  
-- ✅ **Automate business processes** by eliminating the need for manual spreadsheet updates  
-- ✅ **Create an intuitive reporting system** to visualize expenses by category  
-
----
-
-## ✅ Project Completion Checklist
-
-| Criteria          | Status       | Notes |
-|------------------|--------------|-------|
-| **Functionality** | ✔️ Satisfactory | Full CRUD and reporting functionality implemented |
-| **Usability**     | ✔️ Satisfactory | Easy-to-use admin panel and user guidance provided |
-| **Aesthetics**    | ✔️ Satisfactory | Clean UI with readable fonts and accessible colors |
-| **Reliability**   | ✔️ Satisfactory | App handles errors gracefully with friendly messages |
+- Designed relational data models using Django ORM  
+- Implemented secure authentication and session handling  
+- Built dynamic views and templates for data interaction  
+- Developed reporting dashboards to analyze expense distribution  
+- Ensured data integrity with validation and error handling  
 
 ---
 
-## Try it here
-https://rumi-press-22f5.onrender.com
+## 🌍 Live Demo
+
+👉 https://rumi-press-22f5.onrender.com
 
 ---
 
-## 📁 Technologies Used
+## 🧠 What I Learned
 
-- Python  
-- Django
-- BootStrap
-- HTML
-- SQLite (for development)  
-- Git / GitHub  
+- Building full-stack applications with Django  
+- Structuring and querying relational databases  
+- Implementing authentication and user management  
+- Translating business requirements into technical solutions  
+- Deploying and maintaining a live web application  
 
 ---
 
-## 📝 Final Thoughts
+## 📌 Future Improvements
 
-This project showcases my ability to build a full-stack Django web application, starting from raw data to a production-ready system. It not only improved my understanding of Django models, views, and templates but also strengthened my ability to interpret business requirements and translate them into functional features.
+- Add REST API using Django REST Framework  
+- Implement pagination for large datasets  
+- Enhance UI/UX design  
+- Upgrade to PostgreSQL for production  
+- Add role-based access control  
 
-The final product is scalable, secure, and user-friendly — ready to be demonstrated to potential employers and collaborators.
+---
+
+## 📷 Screenshots (Optional)
+
+_Add screenshots of your app here to showcase UI and features_
+
+---
+
+## 📁 Project Status
+
+✅ Completed — actively improving with new features
+
+---
+
+## 🤝 Contributing
+
+This is a personal project, but feedback and suggestions are welcome!
+
+---
+
+## 📄 License
+
+This project is for educational and portfolio purposes.
