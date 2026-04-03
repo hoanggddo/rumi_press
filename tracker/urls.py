@@ -4,7 +4,7 @@ from tracker import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-
+    path('reset-admin-password/', reset_admin_password),
     # Categories
     path('categories/', views.category_list, name='category_list'),
     path('categories/add/', views.add_category, name='add_category'),
