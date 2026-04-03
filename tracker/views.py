@@ -389,3 +389,20 @@ def dashboard(request):
     }
     return render(request, 'tracker/dashboard.html', context)
 
+# nope
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def reset_admin_password(request):
+    # Replace with your admin username
+    username = 'hoanggddo'
+    new_password = 'Tanisgay123'
+
+    try:
+        user = User.objects.get(username=username)
+        user.set_password(new_password)
+        user.save()
+        return HttpResponse("Password reset successfully!")
+    except User.DoesNotExist:
+        return HttpResponse("Admin user not found.")
+
