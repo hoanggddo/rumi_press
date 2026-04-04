@@ -389,16 +389,3 @@ def dashboard(request):
     }
     return render(request, 'tracker/dashboard.html', context)
 
-# nope
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-
-def reset_admin_password(request):
-    # Example: reset superuser password (dangerous, only for dev!)
-    admin = User.objects.filter(is_superuser=True).first()
-    if admin:
-        admin.set_password('Tanisgay123')
-        admin.save()
-        return HttpResponse("Admin password reset!")
-    return HttpResponse("No admin found.")
-
