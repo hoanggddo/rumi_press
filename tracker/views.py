@@ -394,15 +394,11 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 def reset_admin_password(request):
-    # Replace with your admin username
-    username = 'hoanggddo'
-    new_password = 'Tanisgay123'
-
-    try:
-        user = User.objects.get(username=username)
-        user.set_password(new_password)
-        user.save()
-        return HttpResponse("Password reset successfully!")
-    except User.DoesNotExist:
-        return HttpResponse("Admin user not found.")
+    # Example: reset superuser password (dangerous, only for dev!)
+    admin = User.objects.filter(is_superuser=True).first()
+    if admin:
+        admin.set_password('Tanisgay123')
+        admin.save()
+        return HttpResponse("Admin password reset!")
+    return HttpResponse("No admin found.")
 
