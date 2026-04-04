@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.urls import path
 from tracker import views
+from .views import reset_admin_password
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('reset-admin-password/', reset_admin_password),
+    path('reset-admin_password/', reset_admin_password),
     # Categories
     path('categories/', views.category_list, name='category_list'),
     path('categories/add/', views.add_category, name='add_category'),
