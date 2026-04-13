@@ -67,17 +67,6 @@ The application enables efficient management of books, categories, and distribut
 - Upgrade to PostgreSQL for production  
 - Add role-based access control  
 
----
-
-## 📷 Screenshots (Optional)
-
-_Add screenshots of your app here to showcase UI and features_
-
----
-
-## 📁 Project Status
-
-✅ Completed — actively improving with new features
 
 ---
 
