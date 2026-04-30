@@ -1,8 +1,8 @@
-# 📚 Rumi Press Book Distribution Management System
+#  Rumi Press Book Distribution Management System
 
 A full-stack Django web application designed to replace spreadsheet-based workflows for managing book distribution operations.
 
-## 🚀 Overview
+##  Overview
 
 This project simulates a real-world business scenario where a publishing/distribution company transitions from manual spreadsheet tracking to a centralized, web-based system.
 
@@ -10,20 +10,20 @@ The application enables efficient management of books, categories, and distribut
 
 ---
 
-## ✨ Features
+##  Features
 
-- 🔐 User authentication using Django's built-in auth system  
-- 📘 Manage books (title, author, category, expenses)  
-- 🗂️ Create and manage book categories  
-- 🔍 Search functionality for quick data retrieval  
-- 📈 Expense reporting with category-based visualizations  
-- ✏️ Full CRUD operations with validation and error handling  
-- 📤 Migration of legacy spreadsheet data into the system  
-- 🌐 Deployed and accessible online  
+- User authentication using Django's built-in auth system  
+-  Manage books (title, author, category, expenses)  
+-  Create and manage book categories  
+-  Search functionality for quick data retrieval  
+- Expense reporting with category-based visualizations  
+-  Full CRUD operations with validation and error handling  
+-  Migration of legacy spreadsheet data into the system  
+-  Deployed and accessible online  
 
 ---
 
-## 🧩 Tech Stack
+##  Tech Stack
 
 - **Backend:** Python, Django  
 - **Frontend:** HTML, Bootstrap  
@@ -33,7 +33,7 @@ The application enables efficient management of books, categories, and distribut
 
 ---
 
-## 📊 Key Functionality
+##  Key Functionality
 
 - Designed relational data models using Django ORM  
 - Implemented secure authentication and session handling  
@@ -43,13 +43,13 @@ The application enables efficient management of books, categories, and distribut
 
 ---
 
-## 🌍 Live Demo
+##  Live Demo
 
 👉 https://rumi-press-22f5.onrender.com
 
 ---
 
-## 🧠 What I Learned
+##  What I Learned
 
 - Building full-stack applications with Django  
 - Structuring and querying relational databases  
@@ -59,7 +59,7 @@ The application enables efficient management of books, categories, and distribut
 
 ---
 
-## 📌 Future Improvements
+##  Future Improvements
 
 - Add REST API using Django REST Framework  
 - Implement pagination for large datasets  
@@ -70,12 +70,12 @@ The application enables efficient management of books, categories, and distribut
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 This is a personal project, but feedback and suggestions are welcome!
 
 ---
 
-## 📄 License
+##  License
 
 This project is for educational and portfolio purposes.
