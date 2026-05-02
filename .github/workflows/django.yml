@@ -1,4 +1,4 @@
-name: Django CI
+name: Django CI/CD
 
 on:
   push:
@@ -7,11 +7,10 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  build-test:
     runs-on: ubuntu-latest
 
     strategy:
-      max-parallel: 4
       matrix:
         python-version: [3.10, 3.11]
 
@@ -19,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -36,3 +35,11 @@ jobs:
       - name: Run tests
         run: |
           python manage.py test
+
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Trigger Render Deploy
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
