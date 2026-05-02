@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from datetime import date
+from django.urls import reverse
 
 from .models import Category, Book, Transaction, Order, OrderItem
 
@@ -82,13 +83,13 @@ class ViewTests(TestCase):
         self.client = Client()
 
     def test_category_page_loads(self):
-        response = self.client.get("/categories/")
+        response = self.client.get(reverse("category_list"))
         self.assertIn(response.status_code, [200, 302])
 
     def test_books_page_loads(self):
-        response = self.client.get("/books/")
+        response = self.client.get(reverse("book_list"))
         self.assertIn(response.status_code, [200, 302])
 
     def test_dashboard_page(self):
-        response = self.client.get("/dashboard/")
+        response = self.client.get(reverse("dashboard"))
         self.assertIn(response.status_code, [200, 302])
