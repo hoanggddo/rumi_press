@@ -7,7 +7,7 @@ A full-stack Django web application designed to replace spreadsheet-based workfl
 This project simulates a real-world business scenario where a publishing/distribution company transitions from manual spreadsheet tracking to a centralized, web-based system.
 
 The application enables efficient management of books, categories, and distribution expenses, while providing search functionality and visual insights through reporting dashboards.
-
+ 
 ---
 
 ##  Features
