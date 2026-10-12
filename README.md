@@ -51,16 +51,21 @@ The application enables efficient management of books, categories, and distribut
 
 ## Password Reset Email
 
-To deliver password reset emails in production, configure these environment variables in Render using credentials from an email provider:
+The app uses Resend's HTTPS API when `RESEND_API_KEY` is configured. This is the recommended option for Render's free web services, which block outbound SMTP ports. To enable password reset email:
 
-- `EMAIL_HOST`
-- `EMAIL_PORT` (usually `587`)
-- `EMAIL_HOST_USER`
-- `EMAIL_HOST_PASSWORD`
-- `EMAIL_USE_TLS` (usually `True`)
-- `DEFAULT_FROM_EMAIL` (a sender address verified with the provider)
+1. Verify a sending domain in Resend and create an API key.
+2. Add these environment variables in Render (or to your local, Git-ignored `.env` file):
 
-Without `EMAIL_HOST`, Django uses its console email backend. Reset requests will not cause a mail-server connection error, but messages are written to the application logs instead of being delivered.
+```text
+RESEND_API_KEY=re_your_resend_api_key
+DEFAULT_FROM_EMAIL=Rumi Press <no-reply@your-verified-domain.com>
+```
+
+Replace the example API key and sender address with your own values. The sender address must use the domain you verified in Resend. Keep the API key in environment settings; do not commit it to the repository.
+
+3. Redeploy the app, request a password reset for an account whose email you can access, and confirm the message arrives and the reset link works. The API connection has a short timeout so a stalled provider request won't leave the page waiting indefinitely.
+
+Without `RESEND_API_KEY` or `EMAIL_HOST`, Django uses its console email backend. Reset requests won't send a real email; the message is written to the application logs instead.
 
 ##  What I Learned
 

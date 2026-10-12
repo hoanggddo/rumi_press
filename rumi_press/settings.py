@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'allauth.account',
     "crispy_forms",
     "crispy_bootstrap5",
+    "anymail",
 ]
 
 MIDDLEWARE = [
@@ -169,19 +170,27 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+RESEND_API_KEY = config('RESEND_API_KEY', default='')
 EMAIL_HOST = config('EMAIL_HOST', default='')
 EMAIL_BACKEND = config(
     'EMAIL_BACKEND',
     default=(
-        'django.core.mail.backends.smtp.EmailBackend'
+        'anymail.backends.resend.EmailBackend'
+        if RESEND_API_KEY
+        else 'django.core.mail.backends.smtp.EmailBackend'
         if EMAIL_HOST
         else 'django.core.mail.backends.console.EmailBackend'
     ),
 )
+EMAIL_TIMEOUT = config('EMAIL_TIMEOUT', default=10, cast=int)
 EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+ANYMAIL = {
+    'RESEND_API_KEY': RESEND_API_KEY,
+    'REQUESTS_TIMEOUT': (3.05, 10),
+}
 DEFAULT_FROM_EMAIL = config(
     'DEFAULT_FROM_EMAIL',
     default=EMAIL_HOST_USER or 'webmaster@localhost',
