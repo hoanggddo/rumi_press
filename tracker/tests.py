@@ -184,7 +184,7 @@ class ViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "tracker/intro.html")
-        self.assertContains(response, "Book distribution,")
+        self.assertContains(response, "Manage your book catalogue")
         self.assertContains(response, reverse("account_login"))
 
     def test_homepage_keeps_order_form_for_authenticated_visitors(self):
