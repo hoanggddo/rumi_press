@@ -89,6 +89,13 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "account/forgot_pass.html")
 
+    def test_password_reset_done_page_loads(self):
+        response = self.client.get(reverse("account_reset_password_done"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "account/password_reset_done.html")
+        self.assertContains(response, "Check your inbox")
+
     @override_settings(ALLOWED_HOSTS=["testserver"])
     def test_login_page_has_one_password_reset_button(self):
         response = self.client.get(reverse("account_login"))
