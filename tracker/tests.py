@@ -1,4 +1,5 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
+from django.core import mail
 from django.contrib.auth.models import User
 from datetime import date
 from django.urls import reverse
@@ -81,6 +82,28 @@ class OrderTests(TestCase):
 class ViewTests(TestCase):
     def setUp(self):
         self.client = Client()
+
+    def test_password_reset_page_loads(self):
+        response = self.client.get(reverse("account_reset_password"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "account/forgot_pass.html")
+
+    @override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
+    def test_password_reset_request_sends_email(self):
+        User.objects.create_user(
+            username="recoveryuser",
+            email="reader@example.com",
+            password="test-password",
+        )
+
+        response = self.client.post(
+            reverse("account_reset_password"),
+            {"email": "reader@example.com"},
+        )
+
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn("reader@example.com", mail.outbox[0].to)
 
     def test_category_page_loads(self):
         response = self.client.get(reverse("category_list"))

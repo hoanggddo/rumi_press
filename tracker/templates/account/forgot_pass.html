@@ -1,0 +1,151 @@
+{% extends "tracker/layout.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+	.recovery-page {
+		--ink: #263a32;
+		--muted: #68766e;
+		--paper: #f4f3eb;
+		min-height: 72vh;
+		display: grid;
+		place-items: center;
+		padding: 3.5rem 1.25rem;
+		background-color: var(--paper);
+		background-image: radial-gradient(#c8cfc3 0.7px, transparent 0.7px);
+		background-size: 18px 18px;
+	}
+	.recovery-panel {
+		width: min(100%, 920px);
+		display: grid;
+		grid-template-columns: 0.9fr 1.1fr;
+		background: #fffefa;
+		border: 1px solid #d9ded4;
+		box-shadow: 0 18px 55px rgb(38 58 50 / 10%);
+	}
+	.recovery-aside {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 390px;
+		padding: 2.5rem;
+		color: #f8f5e9;
+		background: var(--ink);
+	}
+	.recovery-mark {
+		width: 42px;
+		height: 42px;
+		display: grid;
+		place-items: center;
+		border: 1px solid rgb(248 245 233 / 55%);
+		font-family: Georgia, serif;
+		font-size: 1.35rem;
+	}
+	.recovery-aside h2 {
+		max-width: 260px;
+		margin: 2rem 0 0.8rem;
+		font-family: Georgia, serif;
+		font-size: clamp(1.8rem, 4vw, 2.6rem);
+		line-height: 1.12;
+	}
+	.recovery-aside p {
+		max-width: 270px;
+		margin: 0;
+		color: #d5ddd4;
+		line-height: 1.7;
+	}
+	.recovery-aside small {
+		color: #c4cec4;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.recovery-form {
+		align-self: center;
+		padding: 3rem clamp(1.5rem, 5vw, 4rem);
+		color: var(--ink);
+	}
+	.recovery-kicker {
+		margin-bottom: 0.65rem;
+		color: #9b5c3e;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+	.recovery-form h1 {
+		margin-bottom: 0.8rem;
+		font-family: Georgia, serif;
+		font-size: 2.15rem;
+	}
+	.recovery-copy {
+		margin-bottom: 1.8rem;
+		color: var(--muted);
+		line-height: 1.65;
+	}
+	.recovery-form .form-label {
+		color: var(--ink);
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+	.recovery-form .form-control {
+		min-height: 48px;
+		border-color: #cbd3c9;
+		border-radius: 2px;
+	}
+	.recovery-submit {
+		min-height: 48px;
+		border: 0;
+		border-radius: 2px;
+		color: #fffefa;
+		background: #315547;
+		font-weight: 600;
+	}
+	.recovery-submit:hover {
+		color: #fffefa;
+		background: #263a32;
+	}
+	.recovery-back {
+		display: inline-block;
+		margin-top: 1.25rem;
+		color: #315547;
+		font-size: 0.9rem;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 3px;
+	}
+	@media (max-width: 640px) {
+		.recovery-page { min-height: auto; padding: 1.5rem 1rem; }
+		.recovery-panel { grid-template-columns: 1fr; }
+		.recovery-aside { min-height: 210px; padding: 1.5rem; }
+		.recovery-aside h2 { margin-top: 1.25rem; font-size: 1.8rem; }
+		.recovery-aside small { margin-top: 1.5rem; }
+		.recovery-form { padding: 2rem 1.5rem; }
+	}
+</style>
+<main class="recovery-page">
+	<section class="recovery-panel" aria-labelledby="recovery-title">
+		<aside class="recovery-aside">
+			<div>
+				<div class="recovery-mark" aria-hidden="true">R</div>
+				<h2>A fresh page starts here.</h2>
+				<p>We’ll send a secure link to the email address on your account.</p>
+			</div>
+			<small>Rumi Press · Account access</small>
+		</aside>
+		<div class="recovery-form">
+			<p class="recovery-kicker">Password recovery</p>
+			<h1 id="recovery-title">Forgot your password?</h1>
+			<p class="recovery-copy">Enter your account email and we’ll send instructions to reset your password.</p>
+			{% if messages %}
+				{% for message in messages %}
+					<div class="alert alert-{{ message.tags|default:'info' }}" role="status">{{ message }}</div>
+				{% endfor %}
+			{% endif %}
+			<form method="post" action="{% url 'account_reset_password' %}">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<button class="btn recovery-submit w-100" type="submit">Send reset link</button>
+			</form>
+			<a class="recovery-back" href="{% url 'account_login' %}">← Back to sign in</a>
+		</div>
+	</section>
+</main>
+{% endblock %}
