@@ -178,3 +178,20 @@ class ViewTests(TestCase):
     def test_dashboard_page(self):
         response = self.client.get(reverse("dashboard"))
         self.assertIn(response.status_code, [200, 302])
+
+    def test_homepage_shows_intro_to_logged_out_visitors(self):
+        response = self.client.get(reverse("index"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "tracker/intro.html")
+        self.assertContains(response, "Book distribution,")
+        self.assertContains(response, reverse("account_login"))
+
+    def test_homepage_keeps_order_form_for_authenticated_visitors(self):
+        user = User.objects.create_user(username="homeuser", password="12345")
+        self.client.force_login(user)
+
+        response = self.client.get(reverse("index"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "tracker/index.html")

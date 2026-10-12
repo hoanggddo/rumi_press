@@ -9,8 +9,10 @@ from django.contrib import messages
 from collections import defaultdict
 from django.utils import timezone
 from datetime import timedelta
-@login_required
 def index(request):
+    if not request.user.is_authenticated:
+        return render(request, 'tracker/intro.html')
+
     transactions = Transaction.objects.filter(user=request.user).order_by('-date')
 
     # Show latest order if redirected from submit_order

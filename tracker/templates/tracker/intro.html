@@ -1,0 +1,99 @@
+{% extends 'tracker/layout.html' %}
+{% block content %}
+<main class="intro-page">
+  <section class="intro-hero">
+    <div class="container py-5 py-lg-6">
+      <p class="intro-kicker">RUMI PRESS · DISTRIBUTION WORKSPACE</p>
+      <div class="row align-items-end g-4">
+        <div class="col-lg-8">
+          <h1>Book distribution,<br><span>in one place.</span></h1>
+          <p class="intro-lede">Keep your catalogue, stock, orders, and distribution finances moving together. Rumi Press gives your team one clear place to manage the work behind every book.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a class="btn intro-primary" href="{% url 'account_signup' %}">Get started</a>
+            <a class="btn intro-secondary" href="{% url 'account_login' %}">Log in</a>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="intro-note">
+            <span class="intro-note-mark" aria-hidden="true">R</span>
+            <p>From the first catalogue entry to the latest order, keep the details connected and easy to find.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro-features">
+    <div class="container py-5">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <article class="feature-item">
+            <span class="feature-number">01</span>
+            <h2>Know your catalogue</h2>
+            <p>Keep book details, categories, and available stock organized and searchable.</p>
+          </article>
+        </div>
+        <div class="col-md-4">
+          <article class="feature-item">
+            <span class="feature-number">02</span>
+            <h2>Keep orders moving</h2>
+            <p>Build orders from your catalogue and track quantities as inventory changes.</p>
+          </article>
+        </div>
+        <div class="col-md-4">
+          <article class="feature-item">
+            <span class="feature-number">03</span>
+            <h2>See the bigger picture</h2>
+            <p>Record transactions and review distribution expenses with clear reports.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<style>
+  .intro-page {
+    --intro-ink: #18342d;
+    --intro-paper: #f7f5ef;
+    --intro-accent: #c45a37;
+    color: var(--intro-ink);
+    background: var(--intro-paper);
+  }
+  .intro-hero {
+    background: linear-gradient(115deg, #f7f5ef 0%, #f7f5ef 62%, #e8eee6 62%, #e8eee6 100%);
+  }
+  .intro-hero .container { padding-top: 5rem !important; padding-bottom: 5rem !important; }
+  .intro-kicker, .feature-number {
+    color: var(--intro-accent);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+  }
+  .intro-hero h1 {
+    margin: 1rem 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(2.8rem, 6vw, 5.4rem);
+    font-weight: 500;
+    line-height: .98;
+  }
+  .intro-hero h1 span { color: var(--intro-accent); }
+  .intro-lede { max-width: 39rem; color: #4b5b54; font-size: 1.15rem; line-height: 1.7; }
+  .intro-primary, .intro-secondary { border-radius: 3px; padding: .75rem 1.25rem; font-weight: 600; }
+  .intro-primary { color: white; background: var(--intro-ink); }
+  .intro-primary:hover { color: white; background: #294d42; }
+  .intro-secondary { color: var(--intro-ink); border: 1px solid #9daaa2; }
+  .intro-secondary:hover { color: var(--intro-ink); background: #e8eee6; }
+  .intro-note { max-width: 19rem; margin: 2rem auto 0; padding: 1.5rem; border-top: 2px solid var(--intro-accent); }
+  .intro-note-mark { display: block; color: var(--intro-accent); font: 3rem Georgia, 'Times New Roman', serif; }
+  .intro-note p { margin: .5rem 0 0; color: #4b5b54; line-height: 1.65; }
+  .intro-features { background: #fff; }
+  .feature-item { height: 100%; padding: .5rem 1rem 1rem 0; }
+  .feature-item h2 { margin: .8rem 0 .5rem; font: 1.45rem Georgia, 'Times New Roman', serif; }
+  .feature-item p { max-width: 19rem; margin: 0; color: #59655f; line-height: 1.65; }
+  @media (max-width: 767.98px) {
+    .intro-hero { background: #f7f5ef; }
+    .intro-hero .container { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+    .intro-note { margin: 1rem 0 0; }
+  }
+</style>
+{% endblock %}
