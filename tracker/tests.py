@@ -105,6 +105,24 @@ class ViewTests(TestCase):
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("reader@example.com", mail.outbox[0].to)
 
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend",
+        EMAIL_HOST="",
+    )
+    def test_password_reset_request_without_smtp_does_not_error(self):
+        User.objects.create_user(
+            username="localrecoveryuser",
+            email="localreader@example.com",
+            password="test-password",
+        )
+
+        response = self.client.post(
+            reverse("account_reset_password"),
+            {"email": "localreader@example.com"},
+        )
+
+        self.assertEqual(response.status_code, 302)
+
     def test_category_page_loads(self):
         response = self.client.get(reverse("category_list"))
         self.assertIn(response.status_code, [200, 302])

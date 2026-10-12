@@ -49,6 +49,19 @@ The application enables efficient management of books, categories, and distribut
 
 ---
 
+## Password Reset Email
+
+To deliver password reset emails in production, configure these environment variables in Render using credentials from an email provider:
+
+- `EMAIL_HOST`
+- `EMAIL_PORT` (usually `587`)
+- `EMAIL_HOST_USER`
+- `EMAIL_HOST_PASSWORD`
+- `EMAIL_USE_TLS` (usually `True`)
+- `DEFAULT_FROM_EMAIL` (a sender address verified with the provider)
+
+Without `EMAIL_HOST`, Django uses its console email backend. Reset requests will not cause a mail-server connection error, but messages are written to the application logs instead of being delivered.
+
 ##  What I Learned
 
 - Building full-stack applications with Django  
