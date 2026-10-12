@@ -1,35 +1,54 @@
 {% extends 'tracker/layout.html' %}
 {% block content %}
 <section class="mt-4">
-    <div class="container">
+    <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h3>Rumi Press Book Distribution Management System</h3>
+            <div class="col-lg-10">
+                <div class="mb-5">
+                    <p class="text-uppercase text-secondary mb-2">Rumi Press</p>
+                    <h1 class="mb-3">Book Distribution Management System</h1>
+                    <p class="lead">Manage your book catalogue, stock, orders, and distribution finances from one workspace. Rumi Press brings everyday distribution tasks together so your team can spend less time juggling records and more time keeping books moving.</p>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <a href="{% url 'account_signup' %}" class="btn btn-primary">Get Started</a>
+                        <a href="{% url 'account_login' %}" class="btn btn-secondary">Log In</a>
                     </div>
-                    <div class="card-body">
-                        <p class="card-text text-center">Manage your book catalogue, stock, orders, and distribution finances in one place.</p>
+                </div>
 
-                        <div class="text-center mb-4">
-                            <a href="{% url 'account_signup' %}" class="btn btn-primary">Get Started</a>
-                            <a href="{% url 'account_login' %}" class="btn btn-secondary">Log In</a>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <h5>Manage Books</h5>
-                                <p>Organize book details, categories, and available stock.</p>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <h5>Track Orders</h5>
-                                <p>Create orders from your catalogue and keep quantities up to date.</p>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <h5>Review Finances</h5>
-                                <p>Record transactions and review distribution expenses in reports.</p>
+                <h2 class="h3 mb-3">Tools for your day-to-day work</h2>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Manage your catalogue</h3>
+                                <p class="card-text">Keep titles, authors, publishers, categories, and distribution costs together. Search your books and see available stock while you work.</p>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Build and track orders</h3>
+                                <p class="card-text">Create orders from the book catalogue, set item quantities, and keep inventory updated as books are ordered.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h3 class="h5 card-title">Review your finances</h3>
+                                <p class="card-text">Record income and expenses, then use reports and dashboard summaries to understand distribution costs over time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5 pt-4 border-top">
+                    <div class="col-md-4">
+                        <h2 class="h4">One connected workflow</h2>
+                    </div>
+                    <div class="col-md-8">
+                        <p>Start by organizing books and categories. Use your live stock information to prepare orders, then review expenses and transactions from the same system. Your catalogue, order activity, and financial records stay easy to find as your work grows.</p>
+                        <a href="{% url 'account_signup' %}" class="btn btn-primary mt-2">Create an Account</a>
                     </div>
                 </div>
             </div>
