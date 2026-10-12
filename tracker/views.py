@@ -1,5 +1,7 @@
 # tracker/views.py
 from django.shortcuts import render, redirect, get_object_or_404
+from django.conf import settings
+from allauth.account.views import PasswordResetView
 from .models import Category, Book, Transaction, Order, OrderItem
 from .forms import CategoryForm, BookForm
 from django.db.models import Sum, Count, Max
@@ -9,6 +11,14 @@ from django.contrib import messages
 from collections import defaultdict
 from django.utils import timezone
 from datetime import timedelta
+
+def password_reset(request):
+    if not settings.PASSWORD_RESET_ENABLED:
+        return render(request, 'account/password_reset_unavailable.html')
+
+    return PasswordResetView.as_view()(request)
+
+
 def index(request):
     if not request.user.is_authenticated:
         return render(request, 'tracker/intro.html')

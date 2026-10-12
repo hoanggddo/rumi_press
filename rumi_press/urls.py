@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tracker/', include('tracker.urls')),  # Include URLs from the tracker app
     path('', views.index, name='index'),  # Add this line to handle the root URL
+    path('accounts/password/reset/', views.password_reset, name='account_reset_password'),
     path('accounts/', include('allauth.urls')),  # Include URLs for django-allauth
 ]
 

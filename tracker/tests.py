@@ -87,7 +87,17 @@ class ViewTests(TestCase):
     def test_password_reset_page_loads(self):
         response = self.client.get(reverse("account_reset_password"))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "account/forgot_pass.html")
+        self.assertTemplateUsed(response, "account/password_reset_unavailable.html")
+        self.assertContains(response, "temporarily unavailable")
+
+    def test_password_reset_post_is_disabled_by_default(self):
+        response = self.client.post(
+            reverse("account_reset_password"),
+            {"email": "reader@example.com"},
+        )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "account/password_reset_unavailable.html")
 
     def test_password_reset_done_page_loads(self):
         response = self.client.get(reverse("account_reset_password_done"))
@@ -97,14 +107,16 @@ class ViewTests(TestCase):
         self.assertContains(response, "Check your inbox")
 
     @override_settings(ALLOWED_HOSTS=["testserver"])
-    def test_login_page_has_one_password_reset_button(self):
+    def test_login_page_hides_password_reset_when_disabled(self):
         response = self.client.get(reverse("account_login"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content.decode().count("Forgot your password?"), 1)
-        self.assertContains(response, 'class="btn btn-outline-secondary"')
+        self.assertNotContains(response, "Forgot your password?")
 
-    @override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
+    @override_settings(
+        EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+        PASSWORD_RESET_ENABLED=True,
+    )
     def test_password_reset_request_sends_email(self):
         user = User.objects.create_user(
             username="recoveryuser",
@@ -152,6 +164,7 @@ class ViewTests(TestCase):
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend",
         EMAIL_HOST="",
+        PASSWORD_RESET_ENABLED=True,
     )
     def test_password_reset_request_without_smtp_does_not_error(self):
         User.objects.create_user(

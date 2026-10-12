@@ -59,11 +59,12 @@ The app uses Resend's HTTPS API when `RESEND_API_KEY` is configured. This is the
 ```text
 RESEND_API_KEY=re_your_resend_api_key
 DEFAULT_FROM_EMAIL=Rumi Press <no-reply@your-verified-domain.com>
+PASSWORD_RESET_ENABLED=True
 ```
 
 Replace the example API key and sender address with your own values. The sender address must use the domain you verified in Resend. Keep the API key in environment settings; do not commit it to the repository.
 
-3. Redeploy the app, request a password reset for an account whose email you can access, and confirm the message arrives and the reset link works. The API connection has a short timeout so a stalled provider request won't leave the page waiting indefinitely.
+3. First verify Resend can deliver to an email address you control. Then set `PASSWORD_RESET_ENABLED=True`, redeploy the app, and confirm the password reset link works. Password reset is disabled by default and shows a helpful message until you explicitly enable it. The API connection has a short timeout so a stalled provider request won't leave the page waiting indefinitely.
 
 Without `RESEND_API_KEY` or `EMAIL_HOST`, Django uses its console email backend. Reset requests won't send a real email; the message is written to the application logs instead.
 

@@ -81,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'tracker.context_processors.account_features',
             ],
         },
     },
@@ -198,6 +199,7 @@ DEFAULT_FROM_EMAIL = config(
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_REQUIRED = False
+PASSWORD_RESET_ENABLED = config('PASSWORD_RESET_ENABLED', default=False, cast=bool)
 
 LOGIN_REDIRECT_URL = "/"          # where to go AFTER login
 LOGOUT_REDIRECT_URL = "/"         # optional but recommended
