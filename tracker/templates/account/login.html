@@ -11,9 +11,11 @@
                 <form method="POST">
                     {% csrf_token %}
                     {{form|crispy}}
-                    <p class="mb-3"><a href="{% url 'account_reset_password' %}">Forgot your password?</a></p>
-                    <button class="btn btn-dark" type="submit">Login</button>
-                    <a href="{% url 'account_signup' %}" class="btn btn-secondary">Don't have an account? Sign up</a>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-dark" type="submit">Login</button>
+                        <a href="{% url 'account_reset_password' %}" class="btn btn-outline-secondary">Forgot your password?</a>
+                        <a href="{% url 'account_signup' %}" class="btn btn-secondary">Don't have an account? Sign up</a>
+                    </div>
                 </form>
             </div>
         </div>

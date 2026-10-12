@@ -3,25 +3,43 @@
 {% block content %}
 <section class="container mt-5">
 	<div class="row justify-content-center">
-		<div class="col-md-6">
-			<div class="card-header">
-				<h3 class="text-center">Forgot your password?</h3>
-			</div>
-			<div class="card-body">
-				<p>Enter the email address linked to your account and we’ll send you a password reset link.</p>
-				{% if messages %}
-					{% for message in messages %}
-						<div class="alert alert-{{ message.tags|default:'info' }}" role="status">{{ message }}</div>
-					{% endfor %}
-				{% endif %}
-				<form method="POST" action="{% url 'account_reset_password' %}">
-					{% csrf_token %}
-					{{ form|crispy }}
-					<button class="btn btn-dark" type="submit">Send reset link</button>
-					<a href="{% url 'account_login' %}" class="btn btn-secondary">Back to Login</a>
-				</form>
+		<div class="col-lg-6 col-md-8">
+			<div class="card recovery-card">
+				<div class="card-header bg-white py-4">
+					<p class="text-uppercase text-secondary small text-center mb-2">Rumi Press account</p>
+					<h3 class="text-center mb-0">Reset your password</h3>
+				</div>
+				<div class="card-body p-4 p-md-5">
+					<p class="text-secondary mb-4">Enter the email address linked to your account. We’ll send you a secure link to choose a new password.</p>
+					{% if messages %}
+						{% for message in messages %}
+							<div class="alert alert-{{ message.tags|default:'info' }}" role="status">{{ message }}</div>
+						{% endfor %}
+					{% endif %}
+					<form method="POST" action="{% url 'account_reset_password' %}">
+						{% csrf_token %}
+						{{ form|crispy }}
+						<button class="btn btn-dark w-100" type="submit">Send reset link</button>
+					</form>
+					<div class="text-center mt-3">
+						<a href="{% url 'account_login' %}" class="btn btn-outline-secondary">Back to Login</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<style>
+	.recovery-card {
+		border: 1px solid #dee2e6;
+		border-radius: 0.5rem;
+		box-shadow: 0 0.75rem 2rem rgb(33 37 41 / 8%);
+	}
+	.recovery-card .card-header {
+		border-bottom-color: #e9ecef;
+	}
+	.recovery-card .form-control {
+		min-height: 44px;
+	}
+</style>
 {% endblock %}

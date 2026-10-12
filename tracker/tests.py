@@ -88,6 +88,14 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "account/forgot_pass.html")
 
+    @override_settings(ALLOWED_HOSTS=["testserver"])
+    def test_login_page_has_one_password_reset_button(self):
+        response = self.client.get(reverse("account_login"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.decode().count("Forgot your password?"), 1)
+        self.assertContains(response, 'class="btn btn-outline-secondary"')
+
     @override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
     def test_password_reset_request_sends_email(self):
         User.objects.create_user(
