@@ -1,5 +1,6 @@
 from django.test import TestCase, Client, override_settings
 from django.core import mail
+from urllib.parse import urlsplit
 from django.contrib.auth.models import User
 from datetime import date
 from django.urls import reverse
@@ -98,7 +99,7 @@ class ViewTests(TestCase):
 
     @override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend")
     def test_password_reset_request_sends_email(self):
-        User.objects.create_user(
+        user = User.objects.create_user(
             username="recoveryuser",
             email="reader@example.com",
             password="test-password",
@@ -112,6 +113,34 @@ class ViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("reader@example.com", mail.outbox[0].to)
+
+        reset_url = next(
+            line for line in mail.outbox[0].body.splitlines()
+            if line.startswith("http://testserver/accounts/password/reset/key/")
+        )
+        reset_response = self.client.get(urlsplit(reset_url).path, follow=True)
+        self.assertEqual(reset_response.status_code, 200)
+        self.assertTemplateUsed(
+            reset_response,
+            "account/password_reset_from_key.html",
+        )
+        self.assertContains(reset_response, "Choose a new password")
+
+        change_response = self.client.post(
+            urlsplit(reset_response.redirect_chain[-1][0]).path,
+            {
+                "password1": "Rumi-Reset-2026!Sage",
+                "password2": "Rumi-Reset-2026!Sage",
+            },
+            follow=True,
+        )
+        self.assertEqual(change_response.status_code, 200)
+        self.assertTemplateUsed(
+            change_response,
+            "account/password_reset_from_key_done.html",
+        )
+        user.refresh_from_db()
+        self.assertTrue(user.check_password("Rumi-Reset-2026!Sage"))
 
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend",
