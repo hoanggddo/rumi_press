@@ -112,6 +112,10 @@ class ViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Forgot your password?")
+        self.assertNotContains(
+            response,
+            "Use the password reset button below if you cannot sign in.",
+        )
 
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
