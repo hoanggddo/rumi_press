@@ -27,7 +27,7 @@ The application enables efficient management of books, categories, and distribut
 
 - **Backend:** Python, Django  
 - **Frontend:** HTML, Bootstrap  
-- **Database:** SQLite (development)  
+- **Database:** Neon (Postgres) 
 - **Version Control:** Git / GitHub  
 - **Deployment:** Render  
 
@@ -82,8 +82,7 @@ Without `RESEND_API_KEY` or `EMAIL_HOST`, Django uses its console email backend.
 
 - Add REST API using Django REST Framework  
 - Implement pagination for large datasets  
-- Enhance UI/UX design  
-- Upgrade to PostgreSQL for production  
+- Enhance UI/UX design   
 - Add role-based access control  
 
 
