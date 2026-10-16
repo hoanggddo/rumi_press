@@ -9,15 +9,21 @@
                         <h3>Categories</h3>
                     </div>
                     <div class="card-body">
+                        {% if user.is_staff %}
                         <a href="{% url 'add_category' %}" class="btn btn-primary mb-3">Add Category</a>
+                        {% endif %}
+                        {% if user.is_staff %}
                         <p class="card-text">Manage categories and books easily with our tracker app.</p>
+                        {% else %}
+                        <p class="card-text">Browse book categories.</p>
+                        {% endif %}
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Amount of Books</th>
-                                    <th>Total Expense</th>
-                                    <th>Action</th>  <!-- Added column for the action (delete button) -->
+                                    {% if user.is_staff %}<th>Total Expense</th>{% endif %}
+                                    {% if user.is_staff %}<th>Action</th>{% endif %}
                                 </tr>
                             </thead>
                             <tbody>
@@ -25,20 +31,20 @@
                                 <tr>
                                     <td>{{ category.name }}</td>
                                     <td>{{ category.book_count }}</td>
-                                    <td>
+                                    {% if user.is_staff %}<td>
                                         {% if category.total_expense %}
                                             ${{ category.total_expense|floatformat:2 }}
                                         {% else %}
                                             $0.00
                                         {% endif %}
-                                    </td>
-                                    <td>
+                                    </td>{% endif %}
+                                    {% if user.is_staff %}<td>
                                         <!-- Button to delete the category -->
                                         <form action="{% url 'delete_category' category.id %}" method="post">
                                             {% csrf_token %}
                                             <button type="submit" class="btn btn-danger">Delete</button>
                                         </form>
-                                    </td>
+                                    </td>{% endif %}
                                 </tr>
                                 {% endfor %}
                             </tbody>

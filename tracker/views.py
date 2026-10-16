@@ -7,6 +7,7 @@ from .forms import CategoryForm, BookForm
 from django.db.models import Sum, Count, Max
 from .forms import TransactionForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from collections import defaultdict
 from django.utils import timezone
@@ -41,7 +42,7 @@ def index(request):
     }
     return render(request, 'tracker/index.html', context)
 
-@login_required   
+@staff_member_required
 def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
@@ -50,7 +51,7 @@ def delete_book(request, book_id):
         book.save()
 
     return redirect('book_list')
-@login_required
+@staff_member_required
 def delete_category(request, category_id):
     # Get the category object to delete
     category = get_object_or_404(Category, id=category_id)
@@ -69,7 +70,7 @@ def category_list(request):
     return render(request, 'tracker/category_list.html', {
         'categories': categories
     })
-@login_required
+@staff_member_required
 # Handle adding a new category
 def add_category(request):
     if request.method == 'POST':
@@ -108,7 +109,7 @@ def book_list(request):
     return render(request, 'tracker/book_list.html', context)
 
 
-@login_required
+@staff_member_required
 # Handle adding a new book
 def add_book(request):
     if request.method == 'POST':
@@ -240,7 +241,7 @@ def order_form(request):
         'latest_order': latest_order
     })
 
-@login_required
+@staff_member_required
 # Generate expense report for categories and their books
 def expense_report(request):
     transactions = Transaction.objects.filter(user=request.user).order_by('-date')
@@ -255,7 +256,7 @@ def expense_report(request):
         'net_balance': net_balance,
     }
     return render(request, 'tracker/expense_report.html', context)
-@login_required
+@staff_member_required
 def add_transaction(request):
     if request.method == 'POST':
         form = TransactionForm(request.POST)
@@ -309,7 +310,7 @@ def cart_view(request):
 
     return render(request, 'tracker/cart.html', context)
     
-@login_required
+@staff_member_required
 def edit_transaction(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
     if request.method == 'POST':
@@ -324,7 +325,7 @@ def edit_transaction(request, pk):
     }
     return render(request, 'tracker/edit_transaction.html', context)
 
-@login_required
+@staff_member_required
 def delete_transaction(request, pk):
     transaction = get_object_or_404(Transaction, pk=pk, user=request.user)
     if request.method == 'POST':
@@ -335,7 +336,7 @@ def delete_transaction(request, pk):
     }
     return render(request, 'tracker/delete_transaction.html', context)
 
-@login_required
+@staff_member_required
 def dashboard(request):
     # Get all transactions for the user
     transactions = Transaction.objects.filter(user=request.user).order_by('-date')

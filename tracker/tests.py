@@ -112,10 +112,87 @@ class ViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, "Forgot your password?")
+        self.assertContains(response, reverse("account_signup"))
         self.assertNotContains(
             response,
             "Use the password reset button below if you cannot sign in.",
         )
+
+    def test_public_signup_creates_nonstaff_user(self):
+        response = self.client.post(
+            reverse("account_signup"),
+            {
+                "username": "customeruser",
+                "email": "customer@example.com",
+                "password1": "Customer-password-123!",
+                "password2": "Customer-password-123!",
+            },
+        )
+
+        self.assertEqual(response.status_code, 302)
+        user = User.objects.get(username="customeruser")
+        self.assertFalse(user.is_staff)
+        self.assertFalse(user.is_superuser)
+
+    def test_customer_cannot_manage_catalog_or_finances(self):
+        customer = User.objects.create_user(
+            username="customer",
+            password="test-password",
+        )
+        category = Category.objects.create(name="Customer category")
+        book = Book.objects.create(
+            title="Customer Book",
+            authors="Author",
+            publisher="Publisher",
+            published_date=date(2024, 1, 1),
+            category=category,
+            stock=4,
+            distribution_expense=3,
+        )
+        self.client.force_login(customer)
+
+        denied_responses = [
+            self.client.post(reverse("add_book"), {}),
+            self.client.post(reverse("add_category"), {"name": "Blocked"}),
+            self.client.post(reverse("delete_book", args=[book.id]), {}),
+            self.client.post(reverse("delete_category", args=[category.id]), {}),
+            self.client.get(reverse("dashboard")),
+            self.client.get(reverse("expense_report")),
+        ]
+
+        for response in denied_responses:
+            self.assertEqual(response.status_code, 302)
+        self.assertEqual(Category.objects.count(), 1)
+        self.assertEqual(Book.objects.get(pk=book.pk).stock, 4)
+
+    def test_customer_catalog_pages_hide_management_actions(self):
+        customer = User.objects.create_user(
+            username="catalogcustomer",
+            password="test-password",
+        )
+        category = Category.objects.create(name="Public category")
+        Book.objects.create(
+            title="Public book",
+            authors="Author",
+            publisher="Publisher",
+            published_date=date(2024, 1, 1),
+            category=category,
+            stock=4,
+            distribution_expense=3,
+        )
+        self.client.force_login(customer)
+
+        book_response = self.client.get(reverse("book_list"))
+        category_response = self.client.get(reverse("category_list"))
+
+        self.assertNotContains(book_response, "Add Book")
+        self.assertNotContains(book_response, "Delete")
+        self.assertNotContains(book_response, "Expense")
+        self.assertNotContains(book_response, "$3.00")
+        self.assertNotContains(category_response, "Add Category")
+        self.assertNotContains(category_response, "Delete")
+        self.assertNotContains(category_response, "Total Expense")
+        self.assertNotContains(category_response, "$3.00")
 
     @override_settings(
         EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
@@ -203,6 +280,20 @@ class ViewTests(TestCase):
         self.assertTemplateUsed(response, "tracker/intro.html")
         self.assertContains(response, "Manage your book catalogue")
         self.assertContains(response, reverse("account_login"))
+        self.assertContains(response, reverse("account_signup"))
+
+    def test_admin_can_open_user_creation_page(self):
+        admin_user = User.objects.create_superuser(
+            username="siteadmin",
+            email="admin@example.com",
+            password="test-password",
+        )
+        self.client.force_login(admin_user)
+
+        response = self.client.get("/admin/auth/user/add/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Add user")
 
     def test_homepage_keeps_order_form_for_authenticated_visitors(self):
         user = User.objects.create_user(username="homeuser", password="12345")
